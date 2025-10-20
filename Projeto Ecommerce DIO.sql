@@ -1,11 +1,8 @@
--- ========================
--- CRIAÇÃO DO DATABASE
 -- Kaique Rodrigues Leme
--- ========================
+
 CREATE DATABASE ecommerce;
 USE ecommerce;
 
--- Cliente geral
 CREATE TABLE Cliente (
   idCliente INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(100),
@@ -13,7 +10,6 @@ CREATE TABLE Cliente (
   tipo ENUM('PF','PJ') NOT NULL
 );
 
--- TABELA PRODUTO
 CREATE TABLE Produto (
   idProduto INT PRIMARY KEY AUTO_INCREMENT,
   categoria VARCHAR(45),
@@ -21,20 +17,17 @@ CREATE TABLE Produto (
   preco DECIMAL(10,2)
 );
 
--- TABELA FORNECEDOR
 CREATE TABLE Fornecedor (
   idFornecedor INT PRIMARY KEY AUTO_INCREMENT,
   razao_social VARCHAR(100),
   cnpj VARCHAR(18)
 );
 
--- TABELA ESTOQUE
 CREATE TABLE Estoque (
   idEstoque INT PRIMARY KEY AUTO_INCREMENT,
   local VARCHAR(45)
 );
 
--- TABELA TERCEIRO_VENDEDOR
 CREATE TABLE Terceiro_Vendedor (
   idTerceiro INT PRIMARY KEY AUTO_INCREMENT,
   razao_social VARCHAR(100),
@@ -42,7 +35,6 @@ CREATE TABLE Terceiro_Vendedor (
 );
 
 
--- N:N - Fornecedor disponibiliza Produto
 CREATE TABLE Disponibiliza_Produto (
   Fornecedor_idFornecedor INT,
   Produto_idProduto INT,
@@ -51,7 +43,6 @@ CREATE TABLE Disponibiliza_Produto (
   FOREIGN KEY (Produto_idProduto) REFERENCES Produto(idProduto)
 );
 
--- N:N - Produto em Estoque
 CREATE TABLE Produto_has_Estoque (
   Produto_idProduto INT,
   Estoque_idEstoque INT,
@@ -61,7 +52,6 @@ CREATE TABLE Produto_has_Estoque (
   FOREIGN KEY (Estoque_idEstoque) REFERENCES Estoque(idEstoque)
 );
 
--- N:N - Produtos por Vendedor
 CREATE TABLE Produtos_por_Vendedor (
   Terceiro_Vendedor_idTerceiro INT,
   Produto_idProduto INT,
@@ -72,7 +62,6 @@ CREATE TABLE Produtos_por_Vendedor (
 );
 
 
--- Cliente PF
 CREATE TABLE Cliente_PF (
   idCliente INT PRIMARY KEY,
   cpf VARCHAR(14) UNIQUE,
@@ -80,7 +69,6 @@ CREATE TABLE Cliente_PF (
   FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
 );
 
--- Cliente PJ
 CREATE TABLE Cliente_PJ (
   idCliente INT PRIMARY KEY,
   cnpj VARCHAR(18) UNIQUE,
@@ -88,7 +76,6 @@ CREATE TABLE Cliente_PJ (
   FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
 );
 
--- Pedido
 CREATE TABLE Pedido (
   idPedido INT PRIMARY KEY AUTO_INCREMENT,
   Cliente_idCliente INT,
@@ -98,7 +85,6 @@ CREATE TABLE Pedido (
   FOREIGN KEY (Cliente_idCliente) REFERENCES Cliente(idCliente)
 );
 
--- Pagamento
 CREATE TABLE Pagamento (
   idPagamento INT PRIMARY KEY AUTO_INCREMENT,
   Pedido_idPedido INT,
