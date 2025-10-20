@@ -1,18 +1,24 @@
 -- ========================
 -- CRIAÇÃO DO DATABASE
+-- Kaique Rodrigues Leme
 -- ========================
-CREATE DATABASE IF NOT EXISTS ecommerce;
+CREATE DATABASE ecommerce;
 USE ecommerce;
 
--- ========================
--- TABELAS ORIGINAIS
--- ========================
+-- Cliente geral
+CREATE TABLE Cliente (
+  idCliente INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  tipo ENUM('PF','PJ') NOT NULL
+);
 
--- TABELA TERCEIRO_VENDEDOR
-CREATE TABLE Terceiro_Vendedor (
-  idTerceiro INT PRIMARY KEY AUTO_INCREMENT,
-  razao_social VARCHAR(100),
-  local VARCHAR(45)
+-- TABELA PRODUTO
+CREATE TABLE Produto (
+  idProduto INT PRIMARY KEY AUTO_INCREMENT,
+  categoria VARCHAR(45),
+  nome VARCHAR(100),
+  preco DECIMAL(10,2)
 );
 
 -- TABELA FORNECEDOR
@@ -28,13 +34,13 @@ CREATE TABLE Estoque (
   local VARCHAR(45)
 );
 
--- TABELA PRODUTO
-CREATE TABLE Produto (
-  idProduto INT PRIMARY KEY AUTO_INCREMENT,
-  categoria VARCHAR(45),
-  nome VARCHAR(100),
-  preco DECIMAL(10,2)
+-- TABELA TERCEIRO_VENDEDOR
+CREATE TABLE Terceiro_Vendedor (
+  idTerceiro INT PRIMARY KEY AUTO_INCREMENT,
+  razao_social VARCHAR(100),
+  local VARCHAR(45)
 );
+
 
 -- N:N - Fornecedor disponibiliza Produto
 CREATE TABLE Disponibiliza_Produto (
@@ -65,17 +71,6 @@ CREATE TABLE Produtos_por_Vendedor (
   FOREIGN KEY (Produto_idProduto) REFERENCES Produto(idProduto)
 );
 
--- ========================
--- TABELAS NOVAS
--- ========================
-
--- Cliente geral
-CREATE TABLE Cliente (
-  idCliente INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(100),
-  email VARCHAR(100) UNIQUE,
-  tipo ENUM('PF','PJ') NOT NULL
-);
 
 -- Cliente PF
 CREATE TABLE Cliente_PF (
@@ -124,9 +119,8 @@ CREATE TABLE Itens_Pedido (
   FOREIGN KEY (Produto_idProduto) REFERENCES Produto(idProduto)
 );
 
--- ========================
--- DADOS FICTÍCIOS
--- ========================
+
+-- Dados para Teste
 
 -- Vendedores
 INSERT INTO Terceiro_Vendedor (razao_social, local) VALUES
